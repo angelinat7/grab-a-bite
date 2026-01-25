@@ -16,18 +16,24 @@ export default function HomeScreen() {
           Delicious food delivered to your door!
         </Text>
       </View>
+
       {/* Featured Section  */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Featured Items</Text>
-        <View style={styles.featuredList}>
+        <ScrollView
+          style={styles.featuredList}
+          horizontal
+        >
           {featuredItems.length > 0 &&
             featuredItems.map((item) => (
-              <MenuItem
+              <View
+                style={styles.featuredCard}
                 key={item.id}
-                item={item}
-              />
+              >
+                <MenuItem item={item} />
+              </View>
             ))}
-        </View>
+        </ScrollView>
       </View>
       {/* Category Section */}
     </ScrollView>
