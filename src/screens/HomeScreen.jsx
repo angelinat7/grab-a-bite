@@ -1,18 +1,98 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, ScrollView } from 'react-native';
+import { featuredItems } from '../data/menuItems';
+import MenuItem from '../components/MenuItem';
 
 export default function HomeScreen() {
   return (
-    <View style={styles.container}>
-      <Text>Grab A Bite</Text>
-    </View>
+    <ScrollView>
+      <View style={styles.header}>
+        <Text style={styles.restaurantName}>Grab A Bite</Text>
+        <View style={styles.headerInfo}>
+          <Text style={styles.infoText}>⭐ 4.9 Rating</Text>
+          <Text style={styles.infoDot}>•</Text>
+          <Text style={styles.infoText}>🕐 25-35 min</Text>
+        </View>
+        <Text style={styles.tagline}>
+          Delicious food delivered to your door!
+        </Text>
+      </View>
+      {/* Featured Section  */}
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>Featured Items</Text>
+        <View style={styles.featuredList}>
+          {featuredItems.length > 0 &&
+            featuredItems.map((item) => (
+              <MenuItem
+                key={item.id}
+                item={item}
+              />
+            ))}
+        </View>
+      </View>
+      {/* Category Section */}
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#f8f8f8',
+  },
+  header: {
+    backgroundColor: '#007AFF',
+    padding: 24,
+    paddingTop: 16,
+    paddingBottom: 28,
+    borderBottomLeftRadius: 24,
+    borderBottomRightRadius: 24,
+  },
+  restaurantName: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: '#fff',
+    marginBottom: 8,
+  },
+  headerInfo: {
+    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
+    marginBottom: 8,
+  },
+  infoText: {
+    fontSize: 14,
+    color: '#fff',
+    opacity: 0.9,
+  },
+  infoDot: {
+    fontSize: 14,
+    color: '#fff',
+    opacity: 0.6,
+    marginHorizontal: 8,
+  },
+  tagline: {
+    fontSize: 14,
+    color: '#fff',
+    opacity: 0.8,
+  },
+  section: {
+    padding: 16,
+    paddingBottom: 8,
+  },
+  sectionTitle: {
+    fontSize: 20,
+    fontWeight: '700',
+    color: '#333',
+    marginBottom: 12,
+  },
+  featuredList: {
+    paddingRight: 16,
+    flexDirection: 'row',
+  },
+  featuredCard: {
+    width: 200,
+    marginRight: 12,
+  },
+  bottomPadding: {
+    height: 24,
   },
 });

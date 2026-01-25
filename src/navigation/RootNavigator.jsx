@@ -25,7 +25,7 @@ export default function RootNavigator() {
         }}
       />
       <Tabs.Screen
-        name='cart'
+        name='Cart'
         component={CartScreen}
         options={{
           title: 'Cart',
