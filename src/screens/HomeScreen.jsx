@@ -1,8 +1,15 @@
-import { StyleSheet, Text, View, ScrollView } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import MenuItemCard from '../components/MenuItemCard';
 import { featuredItems } from '../data/menuItems';
-import MenuItem from '../components/MenuItem';
+import CategoryCard from '../components/CategoryCard';
+import { categories } from '../data/categoriesData';
+import { getItemsByCategory } from '../data/menuItems';
 
-export default function HomeScreen() {
+export default function HomeScreen({ navigation }) {
+  const categoryPressHandler = (categoryId) => {
+    navigation.navigate('Category', { categoryId });
+  };
+
   return (
     <ScrollView>
       <View style={styles.header}>
@@ -30,12 +37,26 @@ export default function HomeScreen() {
                 style={styles.featuredCard}
                 key={item.id}
               >
-                <MenuItem item={item} />
+                <MenuItemCard item={item} />
               </View>
             ))}
         </ScrollView>
       </View>
       {/* Category Section */}
+      <View style={styles.section}>
+        {categories.length > 0 &&
+          categories.map((category) => {
+            const itemCount = getItemsByCategory(category.id).length;
+            return (
+              <CategoryCard
+                key={category.id}
+                category={category}
+                itemCount={itemCount}
+                onPress={categoryPressHandler}
+              />
+            );
+          })}
+      </View>
     </ScrollView>
   );
 }

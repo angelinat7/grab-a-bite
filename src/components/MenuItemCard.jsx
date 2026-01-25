@@ -1,5 +1,5 @@
 import { View, Text, Image, StyleSheet } from 'react-native';
-export default function MenuItem({ item }) {
+export default function MenuItemCard({ item }) {
   return (
     <View style={[styles.container]}>
       <Image
