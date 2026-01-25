@@ -14,6 +14,7 @@ export default function RootNavigator() {
         component={HomeNavigator}
         options={{
           title: 'Home',
+          headerShown: false,
           tabBarIcon: ({ color }) => (
             <Ionicons
               name='home'
