@@ -1,7 +1,7 @@
 import { StyleSheet, Text, Image, View, ScrollView } from 'react-native';
 import { getItemById } from '../data/menuItems';
 import Button from '../components/Button';
-export default function DetailsScreen({ route }) {
+export default function DetailsScreen({ navigation, route }) {
   const { itemId } = route.params;
 
   const item = getItemById(itemId);
@@ -45,7 +45,7 @@ export default function DetailsScreen({ route }) {
               style={styles.viewCartButton}
               title='View Cart'
               variant='outline'
-              onPress={() => {}}
+              onPress={() => navigation.navigate('Cart')}
               // TODO add onPress handler
             />
           </View>
