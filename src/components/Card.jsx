@@ -1,22 +1,23 @@
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
-export default function MenuItemCard({ item, onPress }) {
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+
+export default function Card({ meal, onPress }) {
   return (
-    <TouchableOpacity onPress={() => onPress(item.id)}>
+    <TouchableOpacity onPress={() => onPress(meal.id)}>
       <View style={[styles.container]}>
         <Image
-          source={{ uri: item.imageUrl }}
-          style={[styles.image]}
+          source={{ uri: meal.imageUrl }}
+          style={styles.image}
           resizeMode='cover'
         />
+
         <View style={styles.content}>
-          <Text
-            style={styles.title}
-            numberOfLines={2}
-          >
-            {item.name}
-          </Text>
-          <Text style={styles.subtitle}>{item.description}</Text>
-          <Text style={styles.price}>€ {item.price.toFixed(2)}</Text>
+          <Text style={styles.title}>{meal.name}</Text>
+
+          {meal.subtitle && (
+            <Text style={styles.subtitle}>{meal.subtitle}</Text>
+          )}
+
+          <Text style={styles.price}>{meal.price.toFixed(2)}</Text>
         </View>
       </View>
     </TouchableOpacity>

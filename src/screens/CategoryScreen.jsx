@@ -1,32 +1,38 @@
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import { getItemsByCategory } from '../data/menuItems';
-import MenuItemCard from '../components/MenuItemCard';
+import Card from '../components/Card';
+import { useEffect, useState } from 'react';
+import { fetchMeals } from '../api/meal.api';
+import { mealApi } from '../api';
 
 export default function CategoryScreen({ navigation, route }) {
+  const [meals, setMeals] = useState([]);
   const { categoryId } = route.params;
-  const items = getItemsByCategory(categoryId);
 
-  const itemPressedHandler = (itemId) => {
-    navigation.navigate('Details', { itemId });
+  useEffect(() => {
+    mealApi
+      .getAllByCategoryId(categoryId)
+      .then((result) => {
+        setMeals(result.data);
+      })
+      .catch((err) => {
+        alert('Failed to fetch meals for category', err.message);
+      });
+  }, [categoryId, navigation]);
+
+  const itemPressedHandler = (mealId) => {
+    navigation.navigate('Details', { itemId: mealId });
   };
 
   return (
     <ScrollView style={styles.container}>
-      {/*  */}
-      {items.length > 0 ? (
-        items.map((item) => (
-          <MenuItemCard
-            key={item.id}
-            item={item}
-            onPress={itemPressedHandler}
-          />
-        ))
-      ) : (
-        <View style={styles.center}>
-          <Text style={styles.emptyText}>No items found in this category.</Text>
-          <Text style={styles.errorText}>Please try another category.</Text>
-        </View>
-      )}
+      {meals.map((meal) => (
+        <Card
+          key={meal.id}
+          meal={meal}
+          onPress={itemPressedHandler}
+        />
+      ))}
     </ScrollView>
   );
 }

@@ -1,11 +1,45 @@
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import MenuItemCard from '../components/MenuItemCard';
-import { featuredItems } from '../data/menuItems';
+import { useEffect, useState } from 'react';
+import {
+  RefreshControl,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+import { categoryApi, mealApi } from '../api';
 import CategoryCard from '../components/CategoryCard';
-import { categories } from '../data/categoriesData';
-import { getItemsByCategory } from '../data/menuItems';
+import Card from '../components/Card';
 
 export default function HomeScreen({ navigation }) {
+  const [categories, setCategories] = useState([]);
+  const [featured, setFeatured] = useState([]);
+
+  const [toggleRefresh, setToggleRefresh] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
+
+  useEffect(() => {
+    async function fetchData() {
+      setRefreshing(true);
+      try {
+        const categoriesResult = await categoryApi.getAll();
+        setCategories(categoriesResult.data);
+
+        const featuredResult = await mealApi.getFeatured();
+        setFeatured(featuredResult.data);
+      } catch (error) {
+        alert('Failed to fetch data', error.message);
+      } finally {
+        setRefreshing(false);
+      }
+    }
+
+    fetchData();
+  }, [toggleRefresh]);
+
+  const refreshHandler = () => {
+    setToggleRefresh((state) => !state);
+  };
+
   const categoryPressHandler = (categoryId) => {
     navigation.navigate('Category', { categoryId });
   };
@@ -15,7 +49,14 @@ export default function HomeScreen({ navigation }) {
   };
 
   return (
-    <ScrollView>
+    <ScrollView
+      refreshControl={
+        <RefreshControl
+          refreshing={refreshing}
+          onRefresh={refreshHandler}
+        />
+      }
+    >
       <View style={styles.header}>
         <Text style={styles.restaurantName}>Grab A Bite</Text>
         <View style={styles.headerInfo}>
@@ -35,34 +76,33 @@ export default function HomeScreen({ navigation }) {
           style={styles.featuredList}
           horizontal
         >
-          {featuredItems.length > 0 &&
-            featuredItems.map((item) => (
-              <View
-                style={styles.featuredCard}
-                key={item.id}
-              >
-                <MenuItemCard
-                  item={item}
-                  onPress={() => itemPressHandler(item.id)}
-                />
-              </View>
-            ))}
+          {featured.map((meal) => (
+            <View
+              style={styles.featuredCard}
+              key={meal.id}
+            >
+              <Card
+                meal={meal}
+                onPress={itemPressHandler}
+              />
+            </View>
+          ))}
         </ScrollView>
       </View>
+
       {/* Category Section */}
       <View style={styles.section}>
-        {categories.length > 0 &&
-          categories.map((category) => {
-            const itemCount = getItemsByCategory(category.id).length;
-            return (
-              <CategoryCard
-                key={category.id}
-                category={category}
-                itemCount={itemCount}
-                onPress={categoryPressHandler}
-              />
-            );
-          })}
+        {categories.map((category) => {
+          const itemCount = category.length;
+          return (
+            <CategoryCard
+              key={category.id}
+              category={category}
+              itemCount={itemCount}
+              onPress={categoryPressHandler}
+            />
+          );
+        })}
       </View>
     </ScrollView>
   );
