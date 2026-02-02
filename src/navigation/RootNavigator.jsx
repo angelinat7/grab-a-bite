@@ -1,58 +1,27 @@
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
-import { Ionicons } from '@expo/vector-icons';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import TabNavigator from './TabNavigator';
 import CartScreen from '../screens/CartScreen';
-import InfoScreen from '../screens/InfoScreen';
-import HomeNavigator from './HomeNavigator';
+
+
 export default function RootNavigator() {
-  const Tabs = createBottomTabNavigator();
+    const Stack = createNativeStackNavigator();
 
   return (
-    <Tabs.Navigator>
-      <Tabs.Screen
-        name='HomeTab'
-        component={HomeNavigator}
-        options={{
-          title: 'Home',
-          headerShown: false,
-          tabBarIcon: ({ color }) => (
-            <Ionicons
-              name='home'
-              size={28}
-              color={color}
-            />
-          ),
-          // headerShown: false,
-        }}
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen
+        name='TabNavigator'
+        component={TabNavigator}
       />
-      <Tabs.Screen
-        name='Cart'
+            <Stack.Screen
+        name='CartModal'
         component={CartScreen}
-        options={{
-          title: 'Cart',
-          tabBarIcon: ({ color }) => (
-            <Ionicons
-              name='cart'
-              size={28}
-              color={color}
-            />
-          ),
-        }}
+        options={{ 
+            presentation: 'transparentModal',
+            headerShown: true,
+            title: 'Cart',
+            animation: 'slide_from_right',
+         }}
       />
-      <Tabs.Screen
-        name='Info'
-        component={InfoScreen}
-        options={{
-          title: 'Info',
-          tabBarIcon: ({ color }) => (
-            <Ionicons
-              name='information-circle'
-              size={28}
-              color={color}
-            />
-          ),
-        }}
-      />
-    </Tabs.Navigator>
+    </Stack.Navigator>
   );
 }
