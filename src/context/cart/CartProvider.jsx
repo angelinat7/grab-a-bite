@@ -37,9 +37,18 @@ export default function CartProvider({ children }) {
     total: 2,
   });
 
+  const addToCart = (meal, quantity) => {
+    setState((prevState) => ({
+      ...prevState,
+      items: [...prevState.items, { meal, quantity }],
+      total: prevState.total + quantity,
+    }));
+  };
+
   const data = {
     items: state.items,
     total: state.total,
+    addToCart,
   };
 
   return <CartContext.Provider value={data}>{children}</CartContext.Provider>;

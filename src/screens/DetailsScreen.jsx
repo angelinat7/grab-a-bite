@@ -3,10 +3,12 @@ import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import { mealApi } from "../api";
 import Button from "../components/Button";
 import QuantityStepper from "../components/QuantityStepper";
+import { UseCartContext } from "../context/cart/CartContext";
 
 export default function DetailsScreen({ navigation, route }) {
   const [quantity, setQuantity] = useState(1);
   const [meal, setMeal] = useState({});
+  const { addToCart } = UseCartContext();
 
   const { itemId } = route.params;
 
@@ -26,6 +28,10 @@ export default function DetailsScreen({ navigation, route }) {
   };
   const onIncrementHandler = () => {
     setQuantity((qty) => qty + 1);
+  };
+  const addToCartHandler = () => {
+    addToCart(meal, quantity);
+    navigation.navigate("CartModal");
   };
 
   return (
@@ -66,7 +72,7 @@ export default function DetailsScreen({ navigation, route }) {
             <Button
               style={styles.addButton}
               title="Add to Cart"
-              onPress={() => {}}
+              onPress={addToCartHandler}
               // TODO add onPress handler
             />
             <Button
