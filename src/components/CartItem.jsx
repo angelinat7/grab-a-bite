@@ -1,12 +1,14 @@
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
+import QuantityStepper from "./QuantityStepper";
+import { UseCartContext } from "../context/cart/CartContext";
 
-export default function CartItem({ item, quantity }) {
+export default function CartItem({ index, item, quantity }) {
+  const { increaseQuantity, decreaseQuantity } = UseCartContext();
   return (
     <View style={styles.container}>
       <Image source={{ uri: item.imageUrl }} style={styles.image} />
       <View style={styles.content}>
         <Text style={styles.name}>{item.name}</Text>
-        {/* <Text style={styles.options}>{formatOptions(line.options)}</Text> */}
         <View style={styles.priceRow}>
           <Text style={styles.price}>
             ${(quantity * item.price).toFixed(2)}
@@ -16,8 +18,16 @@ export default function CartItem({ item, quantity }) {
       </View>
       <View style={styles.actions}>
         {/* Change quantity */}
+        <QuantityStepper
+          quantity={quantity}
+          onIncrement={() => increaseQuantity(index)}
+          onDecrement={() => decreaseQuantity(index)}
+        />
 
         {/* remove item */}
+        <TouchableOpacity style={styles.removeButton} onPress={() => {}}>
+          <Text style={styles.removeText}>Remove</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );

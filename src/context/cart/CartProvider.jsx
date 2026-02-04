@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useReducer, useState } from "react";
 import { CartContext } from "./CartContext";
 
 export default function CartProvider({ children }) {
@@ -45,10 +45,32 @@ export default function CartProvider({ children }) {
     }));
   };
 
+  const increaseQuantity = (index) => {
+    setState((prevState) => ({
+      items: prevState.items.map((item, i) =>
+        i === index ? { meal: item.meal, quantity: item.quantity + 1 } : item,
+      ),
+      total: prevState.total + 1,
+    }));
+  };
+
+  const decreaseQuantity = (index) => {
+    setState((prevState) => ({
+      items: prevState.items.map((item, i) =>
+        i === index
+          ? { meal: item.meal, quantity: Math.max(1, item.quantity - 1) }
+          : item,
+      ),
+      total: prevState.total - 1,
+    }));
+  };
+
   const data = {
     items: state.items,
     total: state.total,
     addToCart,
+    increaseQuantity,
+    decreaseQuantity,
   };
 
   return <CartContext.Provider value={data}>{children}</CartContext.Provider>;

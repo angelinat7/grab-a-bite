@@ -1,4 +1,4 @@
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, FlatList, Text } from "react-native";
 import CartItem from "../components/CartItem";
 import { UseCartContext } from "../context/cart/CartContext";
 
@@ -7,13 +7,21 @@ export default function CartScreen() {
 
   return (
     <View style={styles.container}>
-      {items.map((item) => (
-        <CartItem
-          key={item.meal.id}
-          quantity={item.quantity}
-          item={item.meal}
-        />
-      ))}
+      <FlatList
+        data={items}
+        renderItem={({ item, index }) => (
+          <CartItem index={index} quantity={item.quantity} item={item.meal} />
+        )}
+        keyExtractor={(item) => item.meal.id.toString()}
+        ListEmptyComponent={
+          <View style={styles.emptyContainer}>
+            <Text style={styles.emptyTitle}>Your cart is empty</Text>
+            <Text style={styles.emptySubtitle}>
+              Browse meals and add them to your cart.
+            </Text>
+          </View>
+        }
+      />
     </View>
   );
 }
