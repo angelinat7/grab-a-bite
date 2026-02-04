@@ -1,18 +1,15 @@
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet } from "react-native";
 
-export default function CartItem({ item }) {
+export default function CartItem({ item, quantity }) {
   return (
     <View style={styles.container}>
-      <Image
-        source={{ uri: item.imageUrl }}
-        style={styles.image}
-      />
+      <Image source={{ uri: item.imageUrl }} style={styles.image} />
       <View style={styles.content}>
         <Text style={styles.name}>{item.name}</Text>
         {/* <Text style={styles.options}>{formatOptions(line.options)}</Text> */}
         <View style={styles.priceRow}>
           <Text style={styles.price}>
-            ${(item.quantity * item.price).toFixed(2)}
+            ${(quantity * item.price).toFixed(2)}
           </Text>
           <Text style={styles.unitPrice}>(${item.price.toFixed(2)} each)</Text>
         </View>
@@ -28,12 +25,12 @@ export default function CartItem({ item }) {
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
-    backgroundColor: '#fff',
+    flexDirection: "row",
+    backgroundColor: "#fff",
     borderRadius: 12,
     padding: 12,
     marginBottom: 12,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
@@ -47,36 +44,36 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     marginLeft: 12,
-    justifyContent: 'center',
+    justifyContent: "center",
   },
   name: {
     fontSize: 16,
-    fontWeight: '600',
-    color: '#333',
+    fontWeight: "600",
+    color: "#333",
     marginBottom: 4,
   },
   options: {
     fontSize: 12,
-    color: '#666',
+    color: "#666",
     marginBottom: 4,
   },
   priceRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
   },
   price: {
     fontSize: 15,
-    fontWeight: '700',
-    color: '#007AFF',
+    fontWeight: "700",
+    color: "#007AFF",
   },
   unitPrice: {
     fontSize: 12,
-    color: '#999',
+    color: "#999",
     marginLeft: 6,
   },
   actions: {
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   removeButton: {
     marginTop: 8,
@@ -84,7 +81,7 @@ const styles = StyleSheet.create({
   },
   removeText: {
     fontSize: 12,
-    color: '#FF3B30',
-    fontWeight: '500',
+    color: "#FF3B30",
+    fontWeight: "500",
   },
 });

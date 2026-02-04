@@ -45,7 +45,7 @@ export default function DetailsScreen({ navigation, route }) {
               style={styles.viewCartButton}
               title='View Cart'
               variant='outline'
-              onPress={() => navigation.navigate('Cart')}
+              onPress={() => navigation.navigate('CartModal')}
               // TODO add onPress handler
             />
           </View>

@@ -1,14 +1,14 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 import {
   RefreshControl,
   ScrollView,
   StyleSheet,
   Text,
   View,
-} from 'react-native';
-import { categoryApi, mealApi } from '../api';
-import CategoryCard from '../components/CategoryCard';
-import Card from '../components/Card';
+} from "react-native";
+import { categoryApi, mealApi } from "../api";
+import CategoryCard from "../components/CategoryCard";
+import Card from "../components/Card";
 
 export default function HomeScreen({ navigation }) {
   const [categories, setCategories] = useState([]);
@@ -27,7 +27,7 @@ export default function HomeScreen({ navigation }) {
         const featuredResult = await mealApi.getFeatured();
         setFeatured(featuredResult.data);
       } catch (error) {
-        alert('Failed to fetch data', error.message);
+        alert(error.message);
       } finally {
         setRefreshing(false);
       }
@@ -41,20 +41,17 @@ export default function HomeScreen({ navigation }) {
   };
 
   const categoryPressHandler = (categoryId) => {
-    navigation.navigate('Category', { categoryId });
+    navigation.navigate("Category", { categoryId });
   };
 
   const itemPressHandler = (itemId) => {
-    navigation.navigate('Details', { itemId });
+    navigation.navigate("Details", { itemId });
   };
 
   return (
     <ScrollView
       refreshControl={
-        <RefreshControl
-          refreshing={refreshing}
-          onRefresh={refreshHandler}
-        />
+        <RefreshControl refreshing={refreshing} onRefresh={refreshHandler} />
       }
     >
       <View style={styles.header}>
@@ -72,19 +69,10 @@ export default function HomeScreen({ navigation }) {
       {/* Featured Section  */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Featured Items</Text>
-        <ScrollView
-          style={styles.featuredList}
-          horizontal
-        >
+        <ScrollView style={styles.featuredList} horizontal>
           {featured.map((meal) => (
-            <View
-              style={styles.featuredCard}
-              key={meal.id}
-            >
-              <Card
-                meal={meal}
-                onPress={itemPressHandler}
-              />
+            <View style={styles.featuredCard} key={meal.id}>
+              <Card meal={meal} onPress={itemPressHandler} />
             </View>
           ))}
         </ScrollView>
@@ -111,10 +99,10 @@ export default function HomeScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8f8f8',
+    backgroundColor: "#f8f8f8",
   },
   header: {
-    backgroundColor: '#007aff',
+    backgroundColor: "#007aff",
     padding: 24,
     paddingTop: 16,
     paddingBottom: 28,
@@ -123,29 +111,29 @@ const styles = StyleSheet.create({
   },
   restaurantName: {
     fontSize: 28,
-    fontWeight: 'bold',
-    color: '#fff',
+    fontWeight: "bold",
+    color: "#fff",
     marginBottom: 8,
   },
   headerInfo: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginBottom: 8,
   },
   infoText: {
     fontSize: 14,
-    color: '#fff',
+    color: "#fff",
     opacity: 0.9,
   },
   infoDot: {
     fontSize: 14,
-    color: '#fff',
+    color: "#fff",
     opacity: 0.6,
     marginHorizontal: 8,
   },
   tagline: {
     fontSize: 14,
-    color: '#fff',
+    color: "#fff",
     opacity: 0.8,
   },
   section: {
@@ -154,13 +142,13 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 20,
-    fontWeight: '700',
-    color: '#333',
+    fontWeight: "700",
+    color: "#333",
     marginBottom: 12,
   },
   featuredList: {
     paddingRight: 16,
-    flexDirection: 'row',
+    flexDirection: "row",
   },
   featuredCard: {
     width: 200,
