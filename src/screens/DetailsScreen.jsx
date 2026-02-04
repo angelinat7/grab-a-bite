@@ -1,10 +1,20 @@
-import { StyleSheet, Text, Image, View, ScrollView } from 'react-native';
-import { getItemById } from '../data/menuItems';
-import Button from '../components/Button';
+import { StyleSheet, Text, Image, View, ScrollView } from "react-native";
+import { getItemById } from "../data/menuItems";
+import Button from "../components/Button";
+import QuantityStepper from "../components/QuantityStepper";
+import { useState } from "react";
 export default function DetailsScreen({ navigation, route }) {
+  const [quantity, setQuantity] = useState(1);
+
   const { itemId } = route.params;
 
   const item = getItemById(itemId);
+  const onDecrementHandler = () => {
+    setQuantity((qty) => Math.max(0, qty - 1));
+  };
+  const onIncrementHandler = () => {
+    setQuantity((qty) => qty + 1);
+  };
 
   return (
     <View style={styles.container}>
@@ -12,7 +22,7 @@ export default function DetailsScreen({ navigation, route }) {
         <Image
           source={{ uri: item.imageUrl }}
           style={styles.image}
-          resizeMode='cover'
+          resizeMode="cover"
         />
         <View style={styles.content}>
           <Text style={styles.name}>{item.name}</Text>
@@ -26,7 +36,11 @@ export default function DetailsScreen({ navigation, route }) {
 
           <View style={styles.qtySection}>
             <Text style={styles.qtyLabel}>Quantity:</Text>
-            <Text> - 1 + </Text>
+            <QuantityStepper
+              quantity={quantity}
+              onIncrement={onIncrementHandler}
+              onDecrement={onDecrementHandler}
+            />
           </View>
         </View>
         <View style={styles.footer}>
@@ -37,15 +51,15 @@ export default function DetailsScreen({ navigation, route }) {
           <View style={styles.footerButtons}>
             <Button
               style={styles.addButton}
-              title='Add to Cart'
+              title="Add to Cart"
               onPress={() => {}}
               // TODO add onPress handler
             />
             <Button
               style={styles.viewCartButton}
-              title='View Cart'
-              variant='outline'
-              onPress={() => navigation.navigate('CartModal')}
+              title="View Cart"
+              variant="outline"
+              onPress={() => navigation.navigate("CartModal")}
               // TODO add onPress handler
             />
           </View>
@@ -57,19 +71,19 @@ export default function DetailsScreen({ navigation, route }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
   },
   center: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   errorText: {
     fontSize: 16,
-    color: '#FF3B30',
+    color: "#FF3B30",
   },
   image: {
-    width: '100%',
+    width: "100%",
     height: 250,
   },
   content: {
@@ -77,59 +91,59 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 24,
-    fontWeight: 'bold',
-    color: '#333',
+    fontWeight: "bold",
+    color: "#333",
     marginBottom: 8,
   },
   description: {
     fontSize: 15,
-    color: '#666',
+    color: "#666",
     lineHeight: 22,
     marginBottom: 8,
   },
   basePrice: {
     fontSize: 16,
-    color: '#007AFF',
-    fontWeight: '600',
+    color: "#007AFF",
+    fontWeight: "600",
   },
   divider: {
     height: 1,
-    backgroundColor: '#e0e0e0',
+    backgroundColor: "#e0e0e0",
     marginVertical: 16,
   },
   qtySection: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
   qtyLabel: {
     fontSize: 16,
-    fontWeight: '600',
-    color: '#333',
+    fontWeight: "600",
+    color: "#333",
   },
   footer: {
     padding: 16,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     borderTopWidth: 1,
-    borderTopColor: '#e0e0e0',
+    borderTopColor: "#e0e0e0",
   },
   priceContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     marginBottom: 12,
   },
   totalLabel: {
     fontSize: 16,
-    color: '#666',
+    color: "#666",
   },
   totalPrice: {
     fontSize: 24,
-    fontWeight: 'bold',
-    color: '#333',
+    fontWeight: "bold",
+    color: "#333",
   },
   footerButtons: {
-    flexDirection: 'row',
+    flexDirection: "row",
     gap: 12,
   },
   addButton: {
