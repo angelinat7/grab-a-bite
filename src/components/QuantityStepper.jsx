@@ -6,7 +6,7 @@ export default function QuantityStepper({
   onIncrement,
   onDecrement,
 }) {
-  const disabled = quantity < 1;
+  const disabled = quantity <= 1;
   return (
     <View style={styles.container}>
       <TouchableOpacity
