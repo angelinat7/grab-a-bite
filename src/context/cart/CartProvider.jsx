@@ -97,6 +97,13 @@ export default function CartProvider({ children }) {
     );
   }, [state.items]);
 
+  const clearCart = () => {
+    setState({
+      items: [],
+      total: 0,
+    });
+  };
+
   const data = {
     items: state.items,
     total: state.total,
@@ -105,6 +112,7 @@ export default function CartProvider({ children }) {
     increaseQuantity,
     decreaseQuantity,
     removeItem,
+    clearCart,
   };
 
   return <CartContext.Provider value={data}>{children}</CartContext.Provider>;

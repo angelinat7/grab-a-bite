@@ -3,7 +3,7 @@ import CartItem from "../components/CartItem";
 import { UseCartContext } from "../context/cart/CartContext";
 import Button from "../components/Button";
 
-export default function CartScreen() {
+export default function CartScreen({ navigation }) {
   const { items, total, totalPrice } = UseCartContext();
 
   return (
@@ -31,7 +31,7 @@ export default function CartScreen() {
         </View>
         <View style={styles.summaryRow}>
           <Text style={styles.totalLabel}>Total:</Text>
-          <Text style={styles.totalValue}>${totalPrice.toFixed(2)}</Text>
+          <Text style={styles.totalValue}> €{totalPrice.toFixed(2)}</Text>
         </View>
 
         <Button
@@ -39,7 +39,7 @@ export default function CartScreen() {
           disabled={items.length === 0}
           title="Proceed to Checkout"
           onPress={() => {
-            // Handle checkout logic here
+            navigation.navigate("Checkout");
           }}
         />
       </View>

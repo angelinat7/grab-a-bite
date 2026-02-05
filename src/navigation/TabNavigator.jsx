@@ -23,7 +23,7 @@ export default function TabNavigator() {
         }}
       />
       <Tabs.Screen
-        name="CartStack"
+        name="CartTab"
         component={CartNavigator}
         options={{
           title: "Cart",

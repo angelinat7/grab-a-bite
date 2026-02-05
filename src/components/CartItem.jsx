@@ -11,9 +11,9 @@ export default function CartItem({ index, item, quantity }) {
         <Text style={styles.name}>{item.name}</Text>
         <View style={styles.priceRow}>
           <Text style={styles.price}>
-            ${(quantity * item.price).toFixed(2)}
+            €{(quantity * item.price).toFixed(2)}
           </Text>
-          <Text style={styles.unitPrice}>(${item.price.toFixed(2)} each)</Text>
+          <Text style={styles.unitPrice}>(€{item.price.toFixed(2)} each)</Text>
         </View>
       </View>
       <View style={styles.actions}>

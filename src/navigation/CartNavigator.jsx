@@ -14,7 +14,7 @@ export default function CartNavigator() {
         options={{ title: "Cart" }}
       />
       <Stack.Screen
-        name="CheckoutScreen"
+        name="Checkout"
         component={CheckoutScreen}
         options={{ title: "Checkout" }}
       />
