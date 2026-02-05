@@ -3,7 +3,7 @@ import CartItem from "../components/CartItem";
 import { UseCartContext } from "../context/cart/CartContext";
 import Button from "../components/Button";
 
-export default function CartScreen({ navigation }) {
+export default function CartScreen({ navigation, route }) {
   const { items, total, totalPrice } = UseCartContext();
 
   return (
@@ -39,7 +39,9 @@ export default function CartScreen({ navigation }) {
           disabled={items.length === 0}
           title="Proceed to Checkout"
           onPress={() => {
-            navigation.navigate("Checkout");
+            navigation.navigate(
+              route.name === "CartModal" ? "CheckoutModal" : "Checkout",
+            );
           }}
         />
       </View>
