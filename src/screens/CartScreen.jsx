@@ -1,9 +1,10 @@
 import { StyleSheet, View, FlatList, Text } from "react-native";
 import CartItem from "../components/CartItem";
 import { UseCartContext } from "../context/cart/CartContext";
+import Button from "../components/Button";
 
 export default function CartScreen() {
-  const { items, total } = UseCartContext();
+  const { items, total, totalPrice } = UseCartContext();
 
   return (
     <View style={styles.container}>
@@ -15,6 +16,7 @@ export default function CartScreen() {
         keyExtractor={(item) => item.meal.id.toString()}
         ListEmptyComponent={
           <View style={styles.emptyContainer}>
+            <Text style={styles.emptyIcon}>🛒</Text>
             <Text style={styles.emptyTitle}>Your cart is empty</Text>
             <Text style={styles.emptySubtitle}>
               Browse meals and add them to your cart.
@@ -22,6 +24,25 @@ export default function CartScreen() {
           </View>
         }
       />
+      <View style={styles.footer}>
+        <View style={styles.summaryRow}>
+          <Text style={styles.summaryLabel}>Items:</Text>
+          <Text style={styles.summaryValue}>{total}</Text>
+        </View>
+        <View style={styles.summaryRow}>
+          <Text style={styles.totalLabel}>Total:</Text>
+          <Text style={styles.totalValue}>${totalPrice.toFixed(2)}</Text>
+        </View>
+
+        <Button
+          style={styles.checkoutButton}
+          disabled={items.length === 0}
+          title="Proceed to Checkout"
+          onPress={() => {
+            // Handle checkout logic here
+          }}
+        />
+      </View>
     </View>
   );
 }
