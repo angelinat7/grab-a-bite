@@ -38,11 +38,25 @@ export default function CartProvider({ children }) {
   });
 
   const addToCart = (meal, quantity) => {
-    setState((prevState) => ({
-      ...prevState,
-      items: [...prevState.items, { meal, quantity }],
-      total: prevState.total + quantity,
-    }));
+    setState((prevState) => {
+      const existingItem = prevState.items.find(
+        (item) => item.meal.id === meal.id,
+      );
+
+      const updatedItems = existingItem
+        ? prevState.items.map((item) =>
+            item.meal.id === meal.id
+              ? { ...item, quantity: item.quantity + quantity }
+              : item,
+          )
+        : [...prevState.items, { meal, quantity }];
+
+      return {
+        ...prevState,
+        items: updatedItems,
+        total: prevState.total + quantity,
+      };
+    });
   };
 
   const increaseQuantity = (index) => {
@@ -65,12 +79,24 @@ export default function CartProvider({ children }) {
     }));
   };
 
+  const removeItem = (index) => {
+    setState((prevState) => {
+      const itemToRemove = prevState.items[index];
+      const updatedItems = prevState.items.filter((_, i) => i !== index);
+      return {
+        items: updatedItems,
+        total: prevState.total - itemToRemove.quantity,
+      };
+    });
+  };
+
   const data = {
     items: state.items,
     total: state.total,
     addToCart,
     increaseQuantity,
     decreaseQuantity,
+    removeItem,
   };
 
   return <CartContext.Provider value={data}>{children}</CartContext.Provider>;

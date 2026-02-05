@@ -6,6 +6,7 @@ export const CartContext = createContext({
   addToCart(meal, quantity) {},
   increaseQuantity(index) {},
   decreaseQuantity(index) {},
+  removeItem(index) {},
 });
 
 export function UseCartContext() {

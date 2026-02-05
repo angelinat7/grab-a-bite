@@ -3,7 +3,7 @@ import QuantityStepper from "./QuantityStepper";
 import { UseCartContext } from "../context/cart/CartContext";
 
 export default function CartItem({ index, item, quantity }) {
-  const { increaseQuantity, decreaseQuantity } = UseCartContext();
+  const { increaseQuantity, decreaseQuantity, removeItem } = UseCartContext();
   return (
     <View style={styles.container}>
       <Image source={{ uri: item.imageUrl }} style={styles.image} />
@@ -25,7 +25,10 @@ export default function CartItem({ index, item, quantity }) {
         />
 
         {/* remove item */}
-        <TouchableOpacity style={styles.removeButton} onPress={() => {}}>
+        <TouchableOpacity
+          style={styles.removeButton}
+          onPress={() => removeItem(index)}
+        >
           <Text style={styles.removeText}>Remove</Text>
         </TouchableOpacity>
       </View>
