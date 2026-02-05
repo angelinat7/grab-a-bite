@@ -1,55 +1,45 @@
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-import { Ionicons } from '@expo/vector-icons';
-import CartScreen from '../screens/CartScreen';
-import InfoScreen from '../screens/InfoScreen';
-import HomeNavigator from './HomeNavigator';
+import { Ionicons } from "@expo/vector-icons";
+import CartScreen from "../screens/CartScreen";
+import InfoScreen from "../screens/InfoScreen";
+import HomeNavigator from "./HomeNavigator";
+import CartNavigator from "./CartNavigator";
 export default function TabNavigator() {
   const Tabs = createBottomTabNavigator();
 
   return (
     <Tabs.Navigator>
       <Tabs.Screen
-        name='HomeTab'
+        name="HomeTab"
         component={HomeNavigator}
         options={{
-          title: 'Home',
+          title: "Home",
           headerShown: false,
           tabBarIcon: ({ color }) => (
-            <Ionicons
-              name='home'
-              size={28}
-              color={color}
-            />
+            <Ionicons name="home" size={28} color={color} />
           ),
           // headerShown: false,
         }}
       />
       <Tabs.Screen
-        name='Cart'
-        component={CartScreen}
+        name="CartStack"
+        component={CartNavigator}
         options={{
-          title: 'Cart',
+          title: "Cart",
           tabBarIcon: ({ color }) => (
-            <Ionicons
-              name='cart'
-              size={28}
-              color={color}
-            />
+            <Ionicons name="cart" size={28} color={color} />
           ),
+          headerShown: false,
         }}
       />
       <Tabs.Screen
-        name='Info'
+        name="Info"
         component={InfoScreen}
         options={{
-          title: 'Info',
+          title: "Info",
           tabBarIcon: ({ color }) => (
-            <Ionicons
-              name='information-circle'
-              size={28}
-              color={color}
-            />
+            <Ionicons name="information-circle" size={28} color={color} />
           ),
         }}
       />
